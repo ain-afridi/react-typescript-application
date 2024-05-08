@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import {  useSelector } from 'react-redux';
-import { RootState } from '../store';
+import {  useDispatch, useSelector } from 'react-redux';
+import { Dispatch, RootState } from '../store';
 import PrivateOutlet from './PrivateRoutes';
 import SignIn from '../pages/SignIn/SignIn';
 
@@ -12,7 +13,7 @@ interface RoutesProps {
 }
 
 const AppRoutes = () => {
-  // const dispatch = useDispatch<Dispatch>();
+  const dispatch = useDispatch<Dispatch>();
   const loader = useSelector((state: RootState) => state.auth.loading);
   const AllRoutes = [
     {
@@ -28,12 +29,20 @@ const AppRoutes = () => {
   //   if (status && !users.length && localStorage.getItem('rank-token')) dispatch.auth.handleGetAllUsers()
   // }, [users])
   
+  useEffect(() => {
+    
+    if (loader) {
+      dispatch.auth.setLoading(false);
+    }
+  }, [loader])
+  
   
 
   return (
     <>
       {
         loader && <div
+          key={'global-loader'}
           style={{
             width: "100%",
             height: "100%",

@@ -5,6 +5,7 @@ import { RootModel } from ".";
 interface IAuth {
   isLoggedIn: boolean;
   loading: boolean;
+  name: string;
   // userData: ILoginResponse | null;
   // forgetPasswordState: "send-email" | "change-password";
   // forgetVerificationToken: string;
@@ -24,11 +25,15 @@ export const auth = createModel<RootModel>()({
     users: [],
     email: "",
     selectedUser: null,
+    name: ''
   } as IAuth,
   reducers: {
     setLoading(state, payload) {
       state.loading = payload;
     },
+    setName(state, payload) {
+      state.name = payload
+    }
   },
   effects: (dispatch) => ({
     // async handleLogin(payload) {
